@@ -15,7 +15,7 @@ spec:
       containers:
       - name: test-container-01
         image: 562086155953.dkr.ecr.us-east-2.amazonaws.com/test-repo:latest-dev-dev
-        imagepullpolicy: always
+      imagepullpolicy: always
         ports:
         - containerPort: 8080
         resources:
