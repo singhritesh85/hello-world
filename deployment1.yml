@@ -15,11 +15,11 @@ spec:
       containers:
       - name: test-container-01
         image: singhritesh85/project-repo:1.89
+        ports:
+        - containerPort: 8080
         imagePullPolicy: Always
       imagePullSecrets: 
       - name: regcred
-        ports:
-        - containerPort: 8080
         resources:
           requests:
             memory: 100Mi
