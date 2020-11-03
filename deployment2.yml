@@ -15,7 +15,6 @@ spec:
       containers:
       - name: test-container-02
         image: httpd:latest
-      imagepullpolicy: Always
         ports:
         - containerPort: 80
         resources:
