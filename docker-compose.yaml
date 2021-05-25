@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: mycontainer-01
+    image: myimage:1.06
+    restart: always
+    ports: 
+    - "8081:8080"
+
+    volumes: 
+    - /mangru:/data
+    networks:
+    - mynet
+
+networks:
+  mynet:
+    driver: bridge
