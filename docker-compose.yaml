@@ -7,6 +7,12 @@ services:
     container_name: mycontainer-01
     image: myimage:1.06
     restart: always
+    logging:
+    driver: awslogs
+    options:
+      awslogs-region: us-east-2
+      awslogs-group: myLogGroup
+      awslogs-stream: mylog-stream
     ports: 
     - "8081:8080"
 
