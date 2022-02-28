@@ -10,11 +10,11 @@ pipeline {
         maven "Maven3"
     }
     stages{
-        stage("Clone-Code"){
+        //stage("Clone-Code"){
             //steps{
                 //cleanWs()
             //}
-        }
+        //}
         stage("Build Code"){
             steps{
                 sh 'mvn clean install'
