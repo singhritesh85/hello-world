@@ -27,7 +27,7 @@ pipeline {
         }
         stage("Deployment"){
             steps{
-                sh 'scp -rv webapp/target/webapp.war "tomcat-dev"@"18.220.167.55":/opt/apache-tomcat/webapps/'
+                sh 'scp -rv webapp/target/webapp.war "tomcat-prod"@"18.118.155.156":/opt/apache-tomcat/webapps/'
             }
         }
     }
