@@ -10,12 +10,6 @@ pipeline {
         maven "Maven3"
     }
     stages{
-        stage("Clone-Code"){
-            steps{
-                cleanWs()
-                checkout([$class: 'GitSCM', branches: [[name: '']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/singhritesh85/hello-world.git']]])
-            }
-        }
         stage("Build Code"){
             steps{
                 sh 'mvn clean install'
