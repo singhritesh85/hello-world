@@ -11,9 +11,9 @@ pipeline {
     }
     stages{
         stage("Clone-Code"){
-            steps{
+            //steps{
                 //cleanWs()
-            }
+            //}
         }
         stage("Build Code"){
             steps{
