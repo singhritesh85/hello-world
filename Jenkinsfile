@@ -12,8 +12,7 @@ pipeline {
     stages{
         stage("Clone-Code"){
             steps{
-                cleanWs()
-                checkout([$class: 'GitSCM', branches: [[name: '${COMMIT_ID}']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/singhritesh85/hello-world.git']]])
+                //cleanWs()
             }
         }
         stage("Build Code"){
