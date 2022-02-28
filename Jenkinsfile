@@ -9,10 +9,6 @@ pipeline {
         jdk "JAVA"
         maven "Maven3"
     }
-    parameters{
-        string(name: 'COMMIT_ID', defaultValue: '', description: 'Provide the Commit Id')
-        string(name: 'TAG_NUMBER', defaultValue: '', description: 'Provide the Docker-Image-TagNumber')
-    }
     stages{
         stage("Clone-Code"){
             steps{
