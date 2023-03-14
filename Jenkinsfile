@@ -6,7 +6,7 @@ pipeline{
         }
     }
     environment{
-        JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto.x86_64"
+        JAVA_HOME="/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.el7_9.x86_64"
         PATH="$PATH:$JAVA_HOME/bin:/opt/apache-maven/bin"    //:$HOME/bin"  // $HOME/bin used for aws-iam-authenticator in eks
     }
     parameters {
