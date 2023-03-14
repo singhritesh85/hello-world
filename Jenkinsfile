@@ -1,23 +1,45 @@
-pipeline {
+pipeline{
     agent {
         node{
             label "Slave-1"
             customWorkspace "/home/jenkins/newdir"
         }
     }
-    tools{
-        jdk "JAVA"
-        maven "Maven3"
+    environment{
+        JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto.x86_64"
+        PATH="$PATH:$JAVA_HOME/bin:/opt/apache-maven/bin"    //:$HOME/bin"  // $HOME/bin used for aws-iam-authenticator in eks
+    }
+    parameters {
+        string(name: 'COMMIT_ID', defaultValue: '', description: 'Provide the commit Id for the build')
     }
     stages{
-        stage("Build Code"){
+        stage("Clone-Code"){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '${COMMIT_ID}']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-cred', url: 'https://github.com/singhritesh85/hello-world.git']]])
+            }
+        }
+        stage("Build"){
             steps{
                 sh 'mvn clean install'
+                sh 'scp -rv webapp docker-user@18.222.83.168:~/'
+                sh 'scp -rv Dockerfile docker-user@18.222.83.168:~/'
+                sh 'scp -rv docker-compose.yaml docker-user@18.222.83.168:~/'
             }
         }
         stage("Deployment"){
             steps{
-                sh 'scp -rv webapp/target/webapp.war "tomcat-prod"@"18.118.155.156":/opt/apache-tomcat/webapps/'
+                sh '''
+                       ssh docker-user@18.222.83.168 << -EOT
+                       docker-compose -p newproject build --no-cache
+                       docker tag myimage:1.06 027330342406.dkr.ecr.us-east-2.amazonaws.com/newecr:latest
+                       eval $(aws ecr get-login --no-include-email --region us-east-2)
+                       docker push 027330342406.dkr.ecr.us-east-2.amazonaws.com/newecr:latest
+                       docker-compose -p newproject down
+                       docker-compose -p newproject up -d
+                       docker ps
+                       exit
+                       EOT
+                '''
             }
         }
     }
