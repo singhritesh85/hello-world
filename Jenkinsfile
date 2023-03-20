@@ -21,15 +21,15 @@ pipeline{
         stage("Build"){
             steps{
                 sh 'mvn clean install'
-                sh 'scp -rv webapp docker-user@35.245.86.176:~/'
-                sh 'scp -rv Dockerfile docker-user@35.245.86.176:~/'
-                sh 'scp -rv docker-compose.yaml docker-user@35.245.86.176:~/'
+                sh 'scp -rv webapp docker-user@34.85.153.18:~/'
+                sh 'scp -rv Dockerfile docker-user@34.85.153.18:~/'
+                sh 'scp -rv docker-compose.yaml docker-user@34.85.153.18:~/'
             }
         }
         stage("Deployment"){
             steps{
                 sh '''
-                       ssh docker-user@35.245.86.176 << -EOT
+                       ssh docker-user@34.85.153.18 << -EOT
                        docker-compose -p newproject build --no-cache
                        docker tag myimage:1.06 027330342406.dkr.ecr.us-east-2.amazonaws.com/newecr:latest-prod
                        eval $(aws ecr get-login --no-include-email --region us-east-2)
